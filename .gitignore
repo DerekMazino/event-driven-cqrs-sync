@@ -1,0 +1,33 @@
+# Operating System
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+# Antigravity CLI, Agents, Skills & SDD Specs (local only)
+.agents/
+.antigravity/
+.agy/
+skills/
+specs/
+*.agent.json
+*.skill.json
+
+# Docker and Database runtime
+docker/data/
+*.rdb
+*.log
+*.trc
+
+# .NET artifacts
+bin/
+obj/
+*.user
+*.suo
+.vs/
+appsettings.Development.json
+
+# Environment & credentials
+.env
+*.key
+*.pem
