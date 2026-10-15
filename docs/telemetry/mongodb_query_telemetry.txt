@@ -1,0 +1,6 @@
+========================================================
+[BENCHMARK MONGODB] Consulta sobre documento desnormalizado
+========================================================
+Tiempo de Ejecucion (ms) : 0 ms
+Documentos Escaneados    : 2
+Documentos Retornados    : 2

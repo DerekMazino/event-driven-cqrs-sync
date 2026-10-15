@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="OutboxPublisher/OutboxPublisher.csproj" />
+  <Project Path="ReadModelProjector/ReadModelProjector.csproj" />
+</Solution>
