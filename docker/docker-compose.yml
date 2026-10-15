@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  # 1. Base de datos transaccional (Command Store / OLTP)
+  oracle-oltp:
+    image: container-registry.oracle.com/database/free:latest
+    platform: linux/amd64
+    container_name: oracle-cqrs-oltp
+    ports:
+      - "1521:1521"
+    environment:
+      - ORACLE_PWD=CqrsMaster2026!
+      - ORACLE_CHARACTERSET=AL32UTF8
+    shm_size: 2g
+    volumes:
+      - oracle-cqrs-data:/opt/oracle/oradata
+      - ./init:/opt/oracle/scripts/setup
+    restart: unless-stopped
+
+  # 2. Message Broker con panel Web UI
+  rabbitmq:
+    image: rabbitmq:3.13-management-alpine
+    container_name: rabbitmq-cqrs
+    ports:
+      - "5672:5672"   # Protocolo AMQP para .NET
+      - "15672:15672" # Panel web de administración (guest / guest)
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    restart: unless-stopped
+
+  # 3. Almacén de lectura desnormalizado (Read Model / Query Store)
+  mongodb:
+    image: mongo:7.0
+    container_name: mongodb-cqrs
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=mongoadmin
+      - MONGO_INITDB_ROOT_PASSWORD=MongoMaster2026!
+      - MONGO_INITDB_DATABASE=loan_read_model
+    volumes:
+      - mongo-cqrs-data:/data/db
+    restart: unless-stopped
+
+volumes:
+  oracle-cqrs-data:
+    driver: local
+  mongo-cqrs-data:
+    driver: local
